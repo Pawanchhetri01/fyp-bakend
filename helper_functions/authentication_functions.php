@@ -152,12 +152,6 @@ function vehicleIn($customerId, $customerName, $number)
     $insert_customer = "INSERT INTO customers (customerId, customerName,number) VALUES ('$customerId', '$customerName', '$number')";
     $result = mysqli_query($con, $insert_customer);
     if ($result) {
-        echo json_encode(
-            [
-                'success' => true,
-                'message' => 'Vehicle added successfully'
-            ]
-        );
         parkIn($customerId);
     } else {
         echo json_encode(
@@ -177,10 +171,12 @@ function parkIn($customerId)
     $insert_parking = "INSERT INTO parkings (vehicle_no, in_time) VALUES ('$customerId', '$currentDate')";
     $result = mysqli_query($con, $insert_parking);
     if ($result) {
+        $park_id = mysqli_insert_id($con);
         echo json_encode(
             [
                 'success' => true,
-                'message' => 'Vehicle parked successfully'
+                'message' => 'Vehicle parked successfully',
+                'data'=>  $park_id
             ]
         );
     } else {

@@ -3,7 +3,7 @@
  $HostName = "localhost";
  
  //Define your MySQL Database Name here.
- $DatabaseName = "nexus_nepal";
+ $DatabaseName = "pawan";
  
  //Define your Database User Name here.
  $HostUser = "root";

@@ -5,11 +5,12 @@ include 'helper_functions/authentication_functions.php';
 // Creating MySQL Connection.
 
 
-if (isset($_POST['customerId']) && isset($_POST['customerName']) && isset($_POST['number'])) {
+if (isset($_POST['customerId']) && isset($_POST['customerName']) && isset($_POST['number']) && isset($_POST['merchant_id'])) {
 
     $customerId = $_POST['customerId'];
     $customerName = $_POST['customerName'];
     $number = $_POST['number'];
+    $merchant_id = $_POST['merchant_id'];
     
 
     //check if the email is already in the database
@@ -17,13 +18,13 @@ if (isset($_POST['customerId']) && isset($_POST['customerName']) && isset($_POST
     $result = mysqli_query($con, $check_customerId);
     $count = mysqli_num_rows($result);
     if ($count > 0) {
-        parkIn($customerId);
+        parkIn($customerId, $merchant_id);
       
         
     } else {
         // addMerchant($email, $password, $name, $phone);
     //   vehicleIn($customerId, $customerName, $number);
-        vehicleIn($customerId, $customerName, $number);
+        vehicleIn($customerId, $customerName, $number, $merchant_id);
     }
 } else {
     echo json_encode(

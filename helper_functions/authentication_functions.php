@@ -145,14 +145,14 @@ function checkIfMerchant($token)
         return false;
     }
 }
-function vehicleIn($customerId, $customerName, $number)
+function vehicleIn($customerId, $customerName, $number, $merchant_id)
 {
     //insert the user into the database
     global $con;
-    $insert_customer = "INSERT INTO customers (customerId, customerName,number) VALUES ('$customerId', '$customerName', '$number')";
+    $insert_customer = "INSERT INTO customers (id, name, number, merchant_id) VALUES ('$customerId', '$customerName', '$number', '$merchant_id')";
     $result = mysqli_query($con, $insert_customer);
     if ($result) {
-        parkIn($customerId);
+        parkIn($customerId, $merchant_id);
     } else {
         echo json_encode(
             [
@@ -164,11 +164,11 @@ function vehicleIn($customerId, $customerName, $number)
 }
 
 //park in
-function parkIn($customerId)
+function parkIn($customerId, $merchant_id)
 {
     $currentDate = date('Y-m-d H:i:s');
     global $con;
-    $insert_parking = "INSERT INTO parkings (vehicle_no, in_time) VALUES ('$customerId', '$currentDate')";
+    $insert_parking = "INSERT INTO parkings (vehicle_no, in_time, merchant_id) VALUES ('$customerId', '$currentDate', '$merchant_id')";
     $result = mysqli_query($con, $insert_parking);
     if ($result) {
         $park_id = mysqli_insert_id($con);

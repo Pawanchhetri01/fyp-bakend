@@ -189,4 +189,39 @@ function parkIn($customerId)
     }
 }
 
+function parkOut($park_id, $park_in_time)
+{
+    $currentDate = date('Y-m-d H:i:s');
+    global $con;
+
+    $one_hour_rate = 10;
+    $one_minute_rate = $one_hour_rate/60;
+    $parking_time = strtotime($currentDate) - strtotime($park_in_time);
+    $parking_time = $parking_time/60;
+    $parking_time = round($parking_time);
+    $parking_cost = $parking_time * $one_minute_rate;
+    $insert_parking_cost = "UPDATE parkings SET out_time = '$currentDate', total = '$parking_cost', park_time = '$parking_time' WHERE id = '$park_id'";
+    $result = mysqli_query($con, $insert_parking_cost);
+
+    if ($result) {
+        $get_parking = "SELECT * FROM parkings WHERE id = '$park_id'";
+        $result = mysqli_query($con, $get_parking);
+        $parking = mysqli_fetch_assoc($result);
+        echo json_encode(
+            [
+                'success' => true,
+                'message' => 'Vehicle out successfully',
+                'data'=>  $parking
+            ]
+        );
+    } else {
+        echo json_encode(
+            [
+                'success' => false,
+                'message' => 'Vehicle out failed'
+            ]
+        );
+    }
+}
+
 

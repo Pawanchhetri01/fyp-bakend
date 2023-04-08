@@ -3,19 +3,19 @@ header("Access-Control-Allow-Origin: *");
 
 include './mailing.php';
 include './generateOTP.php';
-include './DatabaseConfig.php';
+include 'DatabaseConfig.php';
 $connect = mysqli_connect($HostName, $HostUser, $HostPass, $DatabaseName);
 
-if (isset($_POST['email']) && isset($_POST['type'])) {
-    $email = $_POST['email'];
+if (isset($_POST['username']) && isset($_POST['type'])) {
+    $username = $_POST['username'];
     $type = $_POST['type'];
     $otp = generateOTP();
 
     sendMail('OTP ', 'pawankunwar954@gmail.com', 'Pawan Kunwar', $otp);
     if ($type == 'verify') {
-        $sql = "UPDATE users SET verification_code='$otp' where email='$email'";
+        $sql = "UPDATE users SET verification_code='$otp' where username='$username'";
     } else {
-        $sql = "UPDATE users SET password_reset_code='$otp' where email='$email'";
+        $sql = "UPDATE users SET password_reset_code='$otp' where username='$username'";
     }
     if (mysqli_query($connect, $sql)) {
         $data = ['success' => true, 'message' => ['OTP sent successfully!']];

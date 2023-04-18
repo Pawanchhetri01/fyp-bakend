@@ -2,8 +2,8 @@
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Apr 01, 2023 at 12:35 PM
+-- Host: localhost
+-- Generation Time: Apr 18, 2023 at 01:13 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.12
 
@@ -18,28 +18,8 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `nexus_nepal`
+-- Database: `pawan`
 --
-
--- --------------------------------------------------------
-
---
--- Table structure for table `categories`
---
-
-CREATE TABLE `categories` (
-  `id` int(11) NOT NULL,
-  `name` text DEFAULT NULL,
-  `image` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `categories`
---
-
-INSERT INTO `categories` (`id`, `name`, `image`) VALUES
-(1, 'mahan category', 'images/image_picker7168902464389225349.jpg'),
-(2, 'bike', 'images/image_picker8797735592876358082.jpg');
 
 -- --------------------------------------------------------
 
@@ -69,9 +49,9 @@ INSERT INTO `customers` (`customerId`, `customerName`, `number`) VALUES
 ('6321', 'adsff', 'afasdfsd'),
 ('8945', 'dalley', '9856412891'),
 ('9633', 'wertgyhu', '963214785'),
+('9852', 'bhimsen', '986321478'),
 ('9874', 'sujita', '9815180412'),
-('9876', 'Jassi sir', '9846117015'),
-('customerId', 'customerName', 'number');
+('9876', 'Jassi sir', '9846117015');
 
 -- --------------------------------------------------------
 
@@ -85,18 +65,52 @@ CREATE TABLE `parkings` (
   `in_time` datetime DEFAULT NULL,
   `out_time` datetime DEFAULT NULL,
   `payment` varchar(255) DEFAULT NULL,
-  `total` double DEFAULT NULL
+  `total` double DEFAULT NULL,
+  `park_time` varchar(255) DEFAULT NULL,
+  `merchant_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `parkings`
 --
 
-INSERT INTO `parkings` (`id`, `vehicle_no`, `in_time`, `out_time`, `payment`, `total`) VALUES
-(1, 9633, '2023-04-01 11:53:44', NULL, NULL, NULL),
-(2, 9633, '2023-04-01 11:55:42', NULL, NULL, NULL),
-(3, 1234, '2023-04-01 11:57:21', NULL, NULL, NULL),
-(4, 1234, '2023-04-01 12:00:16', NULL, NULL, NULL);
+INSERT INTO `parkings` (`id`, `vehicle_no`, `in_time`, `out_time`, `payment`, `total`, `park_time`, `merchant_id`) VALUES
+(1, 9633, '2023-04-01 11:53:44', '1900-04-08 15:41:18', 'dasdsa', 500, '2hrs', 27),
+(2, 9633, '2023-04-01 11:55:42', '2023-04-08 00:00:00', NULL, 22.166666666667, '133', 27),
+(3, 1234, '2023-04-01 11:57:21', '2023-04-07 14:10:11', NULL, 22.166666666667, '133', 27),
+(4, 1234, '2023-04-01 12:00:16', '2023-04-01 14:10:42', NULL, 21.666666666667, '130', 27),
+(5, 1234, '2023-04-01 13:41:41', '2023-04-01 14:12:16', NULL, 5.1666666666667, '31', 27),
+(6, 1234, '2023-04-01 13:42:14', NULL, NULL, NULL, NULL, NULL),
+(7, 1234, '2023-04-02 13:31:08', NULL, NULL, NULL, NULL, NULL),
+(8, 1234, '2023-04-03 06:28:19', NULL, NULL, NULL, NULL, NULL),
+(9, 9852, '2023-04-03 06:29:58', NULL, NULL, NULL, NULL, NULL),
+(10, 1234, '2023-04-06 10:52:00', NULL, NULL, NULL, NULL, NULL),
+(11, 9633, '2023-04-08 11:59:35', NULL, NULL, NULL, NULL, NULL),
+(12, 1234, '2023-04-08 12:03:55', NULL, NULL, NULL, NULL, NULL),
+(13, 1234, '2023-04-08 12:06:31', NULL, NULL, NULL, NULL, NULL),
+(14, 1234, '2023-04-08 12:08:02', NULL, NULL, NULL, NULL, NULL),
+(15, 9633, '2023-04-08 12:10:12', '2023-04-08 16:04:43', NULL, 10, '1 hrs', 27);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payments`
+--
+
+CREATE TABLE `payments` (
+  `id` int(11) NOT NULL,
+  `amount` double DEFAULT NULL,
+  `payment_date` date DEFAULT NULL,
+  `merchant_id` int(11) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `payments`
+--
+
+INSERT INTO `payments` (`id`, `amount`, `payment_date`, `merchant_id`, `created_at`) VALUES
+(1, 500, '2023-04-08', 27, '2023-04-08 16:09:42');
 
 -- --------------------------------------------------------
 
@@ -488,33 +502,68 @@ INSERT INTO `personal_access_tokens` (`id`, `token`, `user_id`) VALUES
 (371, 'd6499b5ea000d31d3e0d005bab14b348', 27),
 (372, '971735541e4491eca6538b9e78236cd8', 27),
 (373, '2e4e0dae1f9ee242b3040777f7d95f64', 27),
-(374, '4722bb4256fadbfed5b2c6db1d4b6ebf', 27);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `products`
---
-
-CREATE TABLE `products` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  `description` text DEFAULT NULL,
-  `price` varchar(255) DEFAULT NULL,
-  `category_id` int(11) DEFAULT NULL,
-  `image` text DEFAULT NULL,
-  `approved` char(1) DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `products`
---
-
-INSERT INTO `products` (`id`, `name`, `description`, `price`, `category_id`, `image`, `approved`) VALUES
-(1, 'dsad', 'dsad', '500', 1, 'images/image_picker1228750024025510584.jpg', '1'),
-(2, 'ramro product', 'ekdam babal', '5000', 1, 'images/image_picker6851649909133171818.jpg', '1'),
-(3, 'Iphone', 'It is really good', '1000', 1, 'images/image_picker4315828373149569043.jpg', '1'),
-(4, 'bike', 'dami cha ', '200000', 1, 'images/image_picker5885272712062791932.jpg', '0');
+(374, '4722bb4256fadbfed5b2c6db1d4b6ebf', 27),
+(375, 'c888d4eea92976cfa94c685956a742ec', 1),
+(376, 'ee6fecf0ee49a12ad717f84c7df558c7', 27),
+(377, '89219d1b3cdd563cef7a3cfa781b1b36', 1),
+(378, 'f21da1fb4eb4d39b31f49e3856d5b49a', 27),
+(379, '2406470251099ba85c840d7686cade1b', 1),
+(380, '94a2d72e9300b388437303589ad08032', 28),
+(381, 'e5b303f16d0e61b1601ca8cfc8be08e1', 1),
+(382, '905a246303d80d79c4b70d9e0b613027', 27),
+(383, '5f95c946c3ae4f1a2d625373ba68aecb', 1),
+(384, 'd3871818311462510e0f5107e789f7b5', 1),
+(385, '06e501a02611f70f339de178e65c2975', 1),
+(386, 'db9111896f23460860a8918f0ad05e5b', 27),
+(387, 'f13163078fea6f162cb4893e40b1be3c', 27),
+(388, '2a23fa40afe09426c2bff3a1de8c1c68', 1),
+(389, '4360ab832955c3729322494d78e4fc61', 28),
+(390, '0c02b3493119e1af4da2cc1d034d9a59', 28),
+(391, 'd37b0f540158e2b39c28bf87cc85b2eb', 27),
+(392, 'b01d9daf1b74f336d52b53aec54f4ba6', 27),
+(393, 'c6323999430e4039d2332ab07a9f5212', 1),
+(394, '9cd0915bd8786ce196daacf13b4b1ed9', 27),
+(395, '299dcb7ee74844288f93ebe74361e0c6', 27),
+(396, 'd14b519d9f3d98e2a833f5d7a2cb95bf', 1),
+(397, '06850c47730351bac30643f252abb9c1', 27),
+(398, '2dd1da3728fd6b82b9c3c920d9d7f22d', 1),
+(399, 'd250387e51242ab8fe3a09d3218140c2', 1),
+(400, 'a639913d2e121c307249b7d93b47ad05', 27),
+(401, '26e6778aab627dfdbe7a9f68351774a2', 1),
+(402, '6c79eb055417223e9a05c599610cb366', 27),
+(403, '3ce92b562c036a2cd1288def836b2923', 1),
+(404, 'c1a057115b789635236c1ee194c9eaeb', 27),
+(405, 'df225bec3a3e73d77e5925ea8970053f', 27),
+(406, '7b98f4c51f999d48d9f1fa99b74e1f2c', 1),
+(407, '22678e200b35802f303a930943ec256f', 27),
+(408, '1ba0ac8d2e40607f23a8189267f9a96c', 1),
+(409, 'eac8869051ed804eaff640144088151e', 27),
+(410, '42aa6a7ae927efa90d2a95e974d59006', 1),
+(411, '7171b4b93e1e1243ca79b0fd8da8bac9', 1),
+(412, '808db430185c52ad649ece2fb74bf851', 27),
+(413, '0c36152985effee92949baa9cb917f2e', 1),
+(414, '7734426d07570327a51e2cf2b0995eb1', 27),
+(415, 'a161483aad9d91a9887bddd6d0340ced', 1),
+(416, 'ee86402aff4c4fe7edb817a99b939ad4', 27),
+(417, '8e0d657a56e5607959903b4d334ceba2', 1),
+(418, '011f7c5d88ef4567a76c90df4761d686', 1),
+(419, '21d3be71459c2e39d8f1753d212a04d4', 27),
+(420, '95f54eaa926810d6c187dd9d44cb7940', 27),
+(421, 'e06e00457ab61ed19de0b8f9feb27ac1', 1),
+(422, '2d5872b435b2fddbdd13d78637518cb2', 1),
+(423, 'b3e05a32ae9bb65138a15f666ffcf30b', 1),
+(424, 'fb71cdbdd551ffbfa8f8770f2c2aec62', 27),
+(425, '48d8ecec658f778770360117816ff7ef', 1),
+(426, '79e676d478a4c89aa91d3ce099bdb542', 27),
+(427, '28cf5becfd4997a05ab89cdccd52c368', 27),
+(428, '16c862fae9a26d5035e2ec029910cb65', 1),
+(429, '57f85d539639200f86d4ca5557e94cd5', 1),
+(430, '99013080c1f1d409b9b7581b0d9f7ff0', 27),
+(431, 'fd069510f23968f671ea3052cc3edbba', 1),
+(432, '47b9a68e6839755c778c9e497c3e3fda', 27),
+(433, '85a2d43c9d49b42038593ae8d820ed14', 27),
+(434, '0c2fbdca2287e0afd767a93f75f8decb', 1),
+(435, 'ce3d8d34de89d95ffea181406f8dd2b2', 1);
 
 -- --------------------------------------------------------
 
@@ -528,22 +577,23 @@ CREATE TABLE `users` (
   `password` text DEFAULT NULL,
   `role` varchar(255) DEFAULT 'user',
   `name` varchar(100) DEFAULT NULL,
-  `phone` varchar(15) DEFAULT NULL,
+  `number` varchar(15) DEFAULT NULL,
   `verification_code` varchar(10) NOT NULL,
   `password_reset_code` varchar(10) NOT NULL,
-  `image` varchar(255) DEFAULT NULL
+  `image` varchar(255) DEFAULT NULL,
+  `active` char(1) DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `password`, `role`, `name`, `phone`, `verification_code`, `password_reset_code`, `image`) VALUES
-(1, 'pawan@gmail.com', '$2y$10$4b6La2/hCk4ZB9DHGDJGs.PL0Uonp8vuXShG2YBVuexLwzdPEyHDm', 'admin', 'Pawan Kunwar', '9815180612', '', '', NULL),
-(27, 'test123', '$2y$10$UQZwxxWK5dR6VOTsbhl4N.N0jjrMABxjU98KxzUZWZhXkqjPvUeYC', 'merchant', 'pawan', '9815170612', '', '', NULL),
-(28, 'sushma@gmail.com', '$2y$10$SM2WFiBIDtNulxeTTlfv4.45e3kg9sZJIWJWQXa1HtagkCDhUeMLC', 'merchant', 'sushma', '984611111111', '', '', NULL),
-(29, 'dhiraj@gmail.com', '$2y$10$SgFrHgdOuogpYR1cT4Py0uSJhcfZKMW8O6KOcQ8MwosAQBI3rVRmu', 'merchant', 'dhiraj', '9846117015', '', '', NULL),
-(30, 'sujita@gmail.com', '$2y$10$IS91rJeLBdIsQcA0WSwg7.OAAI7qS00B2BdBK.Fm4YVtUqxvN2/cm', 'merchant', 'sujita', '984623145', '', '', NULL);
+INSERT INTO `users` (`id`, `username`, `password`, `role`, `name`, `number`, `verification_code`, `password_reset_code`, `image`, `active`) VALUES
+(1, 'pawan@gmail.com', '$2y$10$4b6La2/hCk4ZB9DHGDJGs.PL0Uonp8vuXShG2YBVuexLwzdPEyHDm', 'admin', 'Pawan Kunwar', '9815180612', '', '0674', NULL, '1'),
+(27, 'test@gmail.com', '$2y$10$ZmWM2vo8DRQ71fpV7.7dFeJt90LhjH1GobGwvbUFiYoZcZLsWwPU.', 'merchant', 'Pawan', '9815180612', '', '', NULL, '1'),
+(28, 'sushma@gmail.com', '$2y$10$SM2WFiBIDtNulxeTTlfv4.45e3kg9sZJIWJWQXa1HtagkCDhUeMLC', 'merchant', 'sushma', '984611111111', '', '', NULL, '1'),
+(29, 'dhiraj@gmail.com', '$2y$10$SgFrHgdOuogpYR1cT4Py0uSJhcfZKMW8O6KOcQ8MwosAQBI3rVRmu', 'merchant', 'dhiraj', '9846117015', '', '', NULL, '1'),
+(30, 'jassiSir@gmail.com', '$2y$10$IS91rJeLBdIsQcA0WSwg7.OAAI7qS00B2BdBK.Fm4YVtUqxvN2/cm', 'merchant', 'JassiSirDon', '9815180612', '', '', NULL, '1');
 
 -- --------------------------------------------------------
 
@@ -562,12 +612,6 @@ CREATE TABLE `vehicle_categories` (
 --
 
 --
--- Indexes for table `categories`
---
-ALTER TABLE `categories`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `customers`
 --
 ALTER TABLE `customers`
@@ -580,15 +624,15 @@ ALTER TABLE `parkings`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `personal_access_tokens`
+-- Indexes for table `payments`
 --
-ALTER TABLE `personal_access_tokens`
+ALTER TABLE `payments`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `products`
+-- Indexes for table `personal_access_tokens`
 --
-ALTER TABLE `products`
+ALTER TABLE `personal_access_tokens`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -608,28 +652,22 @@ ALTER TABLE `vehicle_categories`
 --
 
 --
--- AUTO_INCREMENT for table `categories`
---
-ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
 -- AUTO_INCREMENT for table `parkings`
 --
 ALTER TABLE `parkings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- AUTO_INCREMENT for table `payments`
+--
+ALTER TABLE `payments`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=375;
-
---
--- AUTO_INCREMENT for table `products`
---
-ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=436;
 
 --
 -- AUTO_INCREMENT for table `users`

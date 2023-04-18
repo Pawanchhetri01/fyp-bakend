@@ -7,7 +7,7 @@ include 'helper_functions/authentication_functions.php';
 if(isset($_POST['merchant_id'])){
     $merchant_id=$_POST['merchant_id'];
     $sql = "SELECT * FROM payments join users on payments.merchant_id=users.id where payments.merchant_id='$merchant_id'";
-    $result = mysqli_query($conn, $sql);
+    $result = mysqli_query($con, $sql);
     if ($result) {
         $data = [];
         while ($row = mysqli_fetch_assoc($result)) {

@@ -12,6 +12,8 @@ $tokenCheck=checkIdValidUser($_GET['token']??null);
                 $amount=$_POST['amount'];
                 $date=$_POST['date'];
                 $merchant_id=$_POST['merchant_id'];
+
+                
                 $created_at = date('Y-m-d H:i:s');
                 $sql = "INSERT INTO `payments` (`id`, `user_id`, `merchant_id`, `amount`, `date`, `created_at`) VALUES (NULL, NULL, '$merchant_id', '$amount', '$date', '$created_at')";
                 $result = mysqli_query($conn, $sql);

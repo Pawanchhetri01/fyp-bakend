@@ -5,7 +5,7 @@ include 'helper_functions/authentication_functions.php';
     if( $_GET['customerId']){
             $customerId = $_GET['customerId'];
             //get the user details
-            $getCustomerDetails="SELECT * FROM customers WHERE customerId = '$customerId'";
+            $getCustomerDetails="SELECT * FROM customers WHERE number = '$customerId'";
             $result = mysqli_query($con, $getCustomerDetails);
             $data=mysqli_fetch_assoc($result);
             if($data != null){

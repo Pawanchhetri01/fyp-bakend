@@ -19,6 +19,15 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
       $databasePassword= $data['password'];
       $userId= $data['id'];
       $role= $data['role'];
+      if($data['active'] !='1'){
+        echo json_encode(
+            [
+                'success' => false,
+                'message' => 'Your account has been suspended. Please contact the admin.'
+            ]
+        );
+        return;
+      }
       login($password, $databasePassword, $userId, $role);
      
     } else {

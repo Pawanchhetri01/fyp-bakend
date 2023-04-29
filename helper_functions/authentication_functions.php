@@ -148,19 +148,29 @@ function checkIfMerchant($token)
 function vehicleIn($customerId, $customerName, $number, $merchant_id)
 {
     //insert the user into the database
-    global $con;
-    $insert_customer = "INSERT INTO customers (id, name, number, merchant_id) VALUES ('$customerId', '$customerName', '$number', '$merchant_id')";
-    $result = mysqli_query($con, $insert_customer);
-    if ($result) {
-        parkIn($customerId, $merchant_id);
-    } else {
+    try {
+        global $con;
+        $insert_customer = "INSERT INTO customers (name, number,phone, merchant_id) VALUES ('$customerName', '$customerId','$number', '$merchant_id')";
+        $result = mysqli_query($con, $insert_customer);
+        if ($result) {
+            parkIn($customerId, $merchant_id);
+        } else {
+            echo json_encode(
+                [
+                    'success' => false,
+                    'message' => 'Vehicle entry failed'
+                ]
+            );
+        }
+    } catch (\Throwable $th) {
         echo json_encode(
             [
                 'success' => false,
-                'message' => 'Vehicle entry failed'
+                'message' => $th->getMessage()
             ]
         );
     }
+ 
 }
 
 //park in
@@ -183,7 +193,7 @@ function parkIn($customerId, $merchant_id)
         echo json_encode(
             [
                 'success' => false,
-                'message' => 'Vehicle parking failed'
+                'message' =>  $con->error
             ]
         );
     }
